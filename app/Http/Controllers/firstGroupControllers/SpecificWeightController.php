@@ -38,7 +38,7 @@ class SpecificWeightController extends Controller
             ['weight', '!=', null]
         ]);
 
-        return view('specificWeights', [
+        return view('firstGroup.specificWeights', [
             'weights' => $weights,
             'region_id' => $region_id,
             'industry_id' => $industry_id

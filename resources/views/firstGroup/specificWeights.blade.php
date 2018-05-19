@@ -1,5 +1,5 @@
 @include('layouts.header')
-@include('indexTable')
+@include('layouts.indexTable')
 @yield('login')
 @yield('table_style')
 <h3>Удельный вес</h3>

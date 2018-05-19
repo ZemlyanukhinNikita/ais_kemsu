@@ -33,7 +33,7 @@ class GeneralCharacteristicsController extends Controller
             [$column, '!=', null]
         ]);
 
-        return view('generalCharacteristics', [
+        return view('firstGroup.generalCharacteristics', [
             'characteristics' => $generalCharacteristics,
             'column' => $column,
             'region_id' => $region_id

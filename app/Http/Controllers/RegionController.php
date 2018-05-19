@@ -2,10 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Region;
 use app\Repositories\RegionInterface;
-use App\Year;
-use Illuminate\Http\Request;
 
 class RegionController extends Controller
 {
