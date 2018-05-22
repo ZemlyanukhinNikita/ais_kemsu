@@ -23,7 +23,7 @@
                 @if(\Illuminate\Support\Facades\Auth::check())
                     @foreach($char->years as $year)
                     <td style="background: #F5F8FA; border: none;">
-                        {!! Form::open(['method' => 'put','route' => ['delete',$region_id,$year->id]]) !!}
+                        {!! Form::open(['method' => 'put','route' => ['deleteTotal',$region_id,$year->id]]) !!}
                         {{Form::hidden('column_name',$column)}}
                         <input type="submit" name="add" class="col-xs-offset-1 btn btn-default" value="Удалить значение"/>
                         {!! Form::close() !!}
@@ -36,7 +36,7 @@
         </table>
         @if(\Illuminate\Support\Facades\Auth::check())
 
-                {!! Form::open(['method' => 'put', 'route' => ['create',$region_id]]) !!}
+                {!! Form::open(['method' => 'put', 'route' => ['createTotal',$region_id]]) !!}
                 <h4 style="margin-left: 20px;">Введите значения, чтобы добавить новый показатель</h4>
                 {{ Form::label('year','Год',['style'=>'margin-left:30px;']) }}
                 {{ Form::text('year','',['style' => 'width:100px;'])}}

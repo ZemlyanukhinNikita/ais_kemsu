@@ -15,26 +15,23 @@ Route::get('/', function () {
     return redirect('regions');
 });
 Route::prefix('regions')->group(function () {
+    //роуты для первой группы характеристик региона
     Route::get('/', 'RegionController@show');
     Route::match(['get', 'post'],'{region_id}', 'RegionController@showRegion');
     Route::get('{region_id}/industries', 'IndustryController@show');
     Route::match(['get','post'],'{region_id}/{column}', ['as' => 'generalCharacteristic', 'uses' => 'GeneralCharacteristicsController@show']);
     Route::match(['get', 'post'],'{region_id}/industries/{industry_id}', 'SpecificWeightController@show');
-
-    Route::put('{region_id}/create', 'GeneralCharacteristicsController@createOrUpdate')->name('create');
-    Route::put('{region_id}/delete/{year}', 'GeneralCharacteristicsController@delete')->name('delete');
-
+    Route::put('{region_id}/create/', 'GeneralCharacteristicsController@createOrUpdate')->name('createTotal');
+    Route::put('{region_id}/delete/{year}', 'GeneralCharacteristicsController@delete')->name('deleteTotal');
     Route::put('{region_id}/industries/{industry_id}/create', 'SpecificWeightController@createOrUpdate')->name('createWeight');
     Route::put('{region_id}/industries/{industry_id}/delete/{year}', 'SpecificWeightController@delete')->name('deleteWeight');
+
+//роуты для пятой группы характеристик региона
+    Route::post('{id}/partnership/store', 'RegionPartnershipsController@store')->name('partnership.new');
+    Route::resource('{id}/partnership','RegionPartnershipsController')->except(['edit','create','update','index']);
 });
-//Route::post('/regions/{region_id}/weight/{industry_id}', ['as'=>'firstGroup1','uses' =>'GeneralCharacteristicsController@showIndexIndustries']);
-//Route::get('/regions/{region_id}/{id}/new', 'GeneralCharacteristicsController@create');
 
 //Роуты регистрации и авторизации
-//Route::get('/logout', function (){
-//    Auth::logout();
-//    return redirect()->back();
-//});
 Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout');
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
 Route::post('login', 'Auth\LoginController@login');

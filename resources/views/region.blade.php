@@ -99,3 +99,52 @@
 сбалансированной  пространственной специализации,
         в том числе в рамках совместных проектов власти и бизнеса :</p></h3>
 
+<ul>
+    {{--Индекс потребительских цен --}}
+    {{Form::open(['id' => 'consumer_price_index','method'=>'get','route' => ['partnership.show',$region->id,'consumer_price_index']])}}
+    <li><a href="" onclick="document.getElementById('consumer_price_index').submit();
+        return false;">5.1.1 Индекс потребительских цен</a></li>
+    {{Form::close()}}
+
+    {{--Стоимость фиксированного набора потребительских товаров и услуг  --}}
+    {{Form::open(['id' => 'cost_consumer_goods','method'=>'get','route' => ['partnership.show',$region->id,'cost_consumer_goods']])}}
+    <li><a href="" onclick="document.getElementById('cost_consumer_goods').submit();
+        return false;">5.1.2 Cтоимость фиксированного набора потребительских товаров и услуг </a></li>
+    {{Form::close()}}
+
+    {{--Стоимость фиксированного набора потребительских товаров и услуг в процентах --}}
+    {{Form::open(['id' => 'percent_fixed_stuff','method'=>'get','route' => ['partnership.show',$region->id,'percent_fixed_stuff']])}}
+    <li><a href="" onclick="document.getElementById('percent_fixed_stuff').submit();
+        return false;">5.1.2.1 Стоимость фиксированного набора потребительских товаров и услуг в процентах</a></li>
+    {{Form::close()}}
+
+    {{--Изменение фиксированного набора в процентах к декабрю предыдущего года --}}
+    {{Form::open(['id' => 'edit_percent_fixed_stuff','method'=>'get','route' => ['partnership.show',$region->id,'edit_percent_fixed_stuff']])}}
+    <li><a href="" onclick="document.getElementById('edit_percent_fixed_stuff').submit();
+        return false;">5.1.2.2 Изменение фиксированного набора в процентах к декабрю предыдущего года</a></li>
+    {{Form::close()}}
+
+    {{--Индексы потребительских цен на продовольственные товары --}}
+    {{Form::open(['id' => 'index_foodstuffs','method'=>'get','route' => ['partnership.show',$region->id,'index_foodstuffs']])}}
+    <li><a href="" onclick="document.getElementById('index_foodstuffs').submit();
+        return false;">5.1.3 Индексы потребительских цен на продовольственные товары</a></li>
+    {{Form::close()}}
+
+    {{--Индексы потребительских цен на непродовольственные товары  --}}
+    {{Form::open(['id' => 'index_non_foodstuffs','method'=>'get','route' => ['partnership.show',$region->id,'index_non_foodstuffs']])}}
+    <li><a href="" onclick="document.getElementById('index_non_foodstuffs').submit();
+        return false;">5.1.4 Индексы потребительских цен на непродовольственные товары </a></li>
+    {{Form::close()}}
+
+    {{--Инвестиции в основной капитал --}}
+    {{Form::open(['id' => 'investments','method'=>'get','route' => ['partnership.show',$region->id,'investments']])}}
+    <li><a href="" onclick="document.getElementById('investments').submit();
+        return false;">5.2 Инвестиции в основной капитал</a></li>
+    {{Form::close()}}
+
+    {{--Инвестиции в основной капитал на душу населения  --}}
+    {{Form::open(['id' => 'investments_human','method'=>'get','route' => ['partnership.show',$region->id,'investments_human']])}}
+    <li><a href="" onclick="document.getElementById('consumer_price_index').submit();
+        return false;">5.3 Инвестиции в основной капитал на душу населения </a></li>
+    {{Form::close()}}
+</ul>

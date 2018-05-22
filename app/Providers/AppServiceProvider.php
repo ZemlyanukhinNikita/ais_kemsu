@@ -8,6 +8,8 @@ use App\Repositories\IndustryInterface;
 use App\Repositories\IndustryRepository;
 use app\Repositories\RegionInterface;
 use app\Repositories\RegionRepository;
+use app\Repositories\RegionsPartnershipInterface;
+use app\Repositories\RegionsPartnershipRepository;
 use App\Repositories\SpecificWeightInterface;
 use App\Repositories\SpecificWeightRepository;
 use App\Repositories\YearInterface;
@@ -54,6 +56,10 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(
             SpecificWeightInterface::class,
             SpecificWeightRepository::class
+        );
+        $this->app->bind(
+            RegionsPartnershipInterface::class,
+            RegionsPartnershipRepository::class
         );
     }
 }
