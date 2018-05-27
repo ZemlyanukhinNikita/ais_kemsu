@@ -40,6 +40,12 @@
                             {{--{{ config('app.name', 'Laravel') }}--}}
                             Главная
                         </a>
+                        @if(\Illuminate\Support\Facades\Auth::check())
+                        <a class="navbar-brand" href="{{ url('/reports') }}">
+                            {{--{{ config('app.name', 'Laravel') }}--}}
+                            Отчеты
+                        </a>
+                            @endif
                     </div>
 
                     <div class="collapse navbar-collapse" id="app-navbar-collapse">

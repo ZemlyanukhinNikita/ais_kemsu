@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSpecificWeightsTable extends Migration
+class CreateValuesIndicatorTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,18 +13,20 @@ class CreateSpecificWeightsTable extends Migration
      */
     public function up()
     {
-        Schema::create('specific_weights', function (Blueprint $table) {
+        Schema::create('values_indicator', function (Blueprint $table) {
             $table->increments('id');
-            $table->float('weight')->nullable();
-            $table->integer('industry_id')->unsigned()->nullable();
+            $table->float('value');
             $table->integer('year_id')->unsigned()->nullable();
             $table->integer('region_id')->unsigned()->nullable();
+            $table->integer('indicator_id')->unsigned()->nullable();
+            $table->integer('industry_id')->unsigned()->nullable();
         });
 
-        Schema::table('specific_weights', function($table) {
-            $table->foreign('industry_id')->references('id')->on('industries');
+        Schema::table('values_indicator', function($table) {
+            $table->foreign('indicator_id')->references('id')->on('indicators');
             $table->foreign('year_id')->references('id')->on('years');
             $table->foreign('region_id')->references('id')->on('regions');
+            $table->foreign('industry_id')->references('id')->on('industries');
         });
     }
 
@@ -35,5 +37,6 @@ class CreateSpecificWeightsTable extends Migration
      */
     public function down()
     {
+        Schema::dropIfExists('values_indicator');
     }
 }

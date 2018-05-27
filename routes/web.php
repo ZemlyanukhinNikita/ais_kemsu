@@ -15,20 +15,23 @@ Route::get('/', function () {
     return redirect('regions');
 });
 Route::prefix('regions')->group(function () {
-    //роуты для первой группы характеристик региона
+    //роуты региона
     Route::get('/', 'RegionController@show');
-    Route::match(['get', 'post'],'{region_id}', 'RegionController@showRegion');
-    Route::get('{region_id}/industries', 'IndustryController@show');
-    Route::match(['get','post'],'{region_id}/{column}', ['as' => 'generalCharacteristic', 'uses' => 'GeneralCharacteristicsController@show']);
-    Route::match(['get', 'post'],'{region_id}/industries/{industry_id}', 'SpecificWeightController@show');
-    Route::put('{region_id}/create/', 'GeneralCharacteristicsController@createOrUpdate')->name('createTotal');
-    Route::put('{region_id}/delete/{year}', 'GeneralCharacteristicsController@delete')->name('deleteTotal');
-    Route::put('{region_id}/industries/{industry_id}/create', 'SpecificWeightController@createOrUpdate')->name('createWeight');
-    Route::put('{region_id}/industries/{industry_id}/delete/{year}', 'SpecificWeightController@delete')->name('deleteWeight');
+    Route::match(['get', 'post'],'{region_id}/', 'RegionController@showRegion');
+    Route::get('{id}/group/{group_id}','RegionController@showIndicators');
+    //Роут ресурс для показателей, которые делятся на 16 отраслей (индустрий)
+    Route::resource(
+        '{id}/group/{group_id}/indicator/{indicator_id}/industries/{industries_id}/industryValues',
+        'IndustriesValuesController'
+    )->except(['create', 'edit', 'update', 'show']);
+    //Роут ресурс для обычных показателей характеристик региона
+    Route::resource('{id}/group/{group_id}/indicator/{indicator_id}/values','IndicatorValuesController')
+        ->except(['create', 'edit', 'update', 'show']);
+});
 
-//роуты для пятой группы характеристик региона
-    Route::post('{id}/partnership/store', 'RegionPartnershipsController@store')->name('partnership.new');
-    Route::resource('{id}/partnership','RegionPartnershipsController')->except(['edit','create','update','index']);
+//роуты отчетов
+Route::get('/reports', function () {
+    return view('reports');
 });
 
 //Роуты регистрации и авторизации

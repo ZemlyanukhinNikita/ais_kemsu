@@ -14,6 +14,8 @@ class DatabaseSeeder extends Seeder
          $this->call([
              YearSeeder::class,
              RegionsSeeder::class,
+             GroupsSeeder::class,
+             IndicatorsSeeder::class,
              IndustriesSeeder::class
              ]);
     }

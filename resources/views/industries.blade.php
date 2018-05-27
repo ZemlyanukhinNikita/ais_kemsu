@@ -1,8 +1,10 @@
 @include('layouts.header')
 @yield('login')
+
+<h3>{{$region->region}}</h3><br>
+<h4>{{$group->name}}</h4><br>
+<h4>{{$indicator->name}}</h4><br>
 <style type="text/css">
-    h2 {text-align: center; color: #2a88bd;}
-    h3 {align-content: center;}
     a {text-decoration: none; color: #286B9A}
     a:visited { color: #31708f }
     a:active { color: #FFCA0F }
@@ -11,12 +13,10 @@
         color: #FFCA0F; /* Цвет ссылки */
     }
 </style>
-<h3 style="margin-left: 30px;">Выберите отрасль:</h3>
+
+<h4>Выберите отрасль: </h4>
 <ul>
-
     @foreach ($industries as $industry)
-        <li><a style="text-decoration: none" href="industries/{{$industry->id}}">{{ $industry->industry_name }}</a></li>
+        <li><a style="text-decoration: none" href="industries/{{$industry->id}}/industryValues">{{ $industry->name }}</a></li>
     @endforeach
-
-
 </ul>

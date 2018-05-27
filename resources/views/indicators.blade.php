@@ -1,6 +1,8 @@
 @include('layouts.header')
 @yield('login')
+
 <h2 style="margin-left: 30px;">{{$region->region}}</h2>
+<h3 style="margin-left: 30px;">{{$group->name}}</h3>
 <style type="text/css">
     a {text-decoration: none; color: #286B9A}
     a:visited { color: #31708f }
@@ -13,8 +15,7 @@
 
 
 <ul>
-    @foreach ($groups as $group)
-        <li><a style="text-decoration: none" href="{{$region->id}}/group/{{$group->id}}">{{ $group->name }}</a></li>
+    @foreach ($indicators as $indicator)
+        <li><a style="text-decoration: none" href="{{$group->id}}/indicator/{{$indicator->id}}/values">{{ $indicator->name }}</a></li>
     @endforeach
 </ul>
-

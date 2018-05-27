@@ -94,13 +94,12 @@ abstract class EloquentRepository implements ModelInterface
     /**
      * {@inheritDoc}
      * Метод удаления модели из базы данных, реализуется в дочерних классах
-     * @param string $field
      * @param string $values
      * @return Model
      */
-    public function delete(string $field, string $value)
+    public function delete(array $values)
     {
-        return $this->getModel()->where($field, $value)->delete();
+        return $this->getModel()->where($values)->delete();
     }
 
     /**
