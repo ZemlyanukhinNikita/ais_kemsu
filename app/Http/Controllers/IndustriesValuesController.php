@@ -122,7 +122,7 @@ class IndustriesValuesController extends Controller
                 'date_format' => 'Введите правильный год'
             ];
         $validator =  Validator::make($this->request->all(),[
-            'year' => 'required|date_format:YYYY',
+            'year' => 'required|date_format:"Y"',
             'value' => 'required',
         ],$messages);
 
