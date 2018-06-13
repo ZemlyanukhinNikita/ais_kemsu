@@ -38,8 +38,18 @@
     @endforeach
 
 </table>
+<br>
 @if(\Illuminate\Support\Facades\Auth::check())
+    @if(count($errors) > 0)
+        <div class="alert alert-danger">
+            <ul>
+                @foreach($errors->all() as $error)
+                    <li>{{ $error}}</li>
+                @endforeach
 
+            </ul>
+        </div>
+    @endif
     {!! Form::open(['method' => 'post','action'=>'IndicatorValuesController@store' ,'route' => ['industryValues.store',$ids[0],$ids[1],$ids[2], $ids[3]]]) !!}
     <h4 style="margin-left: 20px;">Введите значения, чтобы добавить новый показатель</h4>
     {{ Form::label('year','Год',['style'=>'margin-left:30px;']) }}

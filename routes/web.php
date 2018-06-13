@@ -31,8 +31,19 @@ Route::prefix('regions')->group(function () {
 
 //роуты отчетов
 Route::get('/reports', function () {
-    return view('reports');
+    $groupsRepository = \App\Group::all();
+    $regionsRepository = \App\Region::all();
+    foreach ($regionsRepository as $region)
+    {
+        $regions[] = $region->region;
+    }
+    foreach ($groupsRepository as $group)
+    {
+        $groups[] = $group->name;
+    }
+    return view('reports',['group' => $groups,'region' => $regions]);
 });
+Route::post('/reports/export','ReportsController@export')->name('export');
 
 //Роуты регистрации и авторизации
 Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout');

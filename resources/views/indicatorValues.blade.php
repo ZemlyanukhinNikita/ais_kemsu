@@ -14,6 +14,7 @@
         <th>Год</th>
         <th>Показатель</th>
     </tr>
+
     @foreach($values as $value)
         <tr>
             <td>
@@ -36,7 +37,18 @@
     @endforeach
 
 </table>
+<br>
 @if(\Illuminate\Support\Facades\Auth::check())
+    @if(count($errors) > 0)
+        <div class="alert alert-danger">
+            <ul>
+                @foreach($errors->all() as $error)
+                    <li>{{ $error}}</li>
+                @endforeach
+
+            </ul>
+        </div>
+    @endif
 
     {!! Form::open(['method' => 'post','action'=>'IndicatorValuesController@store' ,'route' => ['values.store',$ids[0],$ids[1],$ids[2]]]) !!}
     <h4 style="margin-left: 20px;">Введите значения, чтобы добавить новый показатель</h4>

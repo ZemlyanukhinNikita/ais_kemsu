@@ -9,6 +9,7 @@ use App\Repositories\IndustryInterface;
 use app\Repositories\RegionInterface;
 use App\Repositories\YearInterface;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class IndicatorValuesController extends Controller
 {
@@ -126,6 +127,21 @@ class IndicatorValuesController extends Controller
     {
         $yearValue = $this->request->input('year');
         $value = $this->request->input('value');
+
+        $messages =
+            [
+                'required' => 'Поле :attribute обязательно для заполнения',
+                'date_format' => 'Введите правильный год'
+            ];
+        $validator =  Validator::make($this->request->all(),[
+            'year' => 'required|date_format:YYYY',
+            'value' => 'required',
+            ],$messages);
+
+        if ($validator->fails()) {
+
+            return redirect()->route('values.store',[$region_id,$group_id,$indicator_id])->withErrors($validator)->withInput();
+        }
 
         $year = $this->yearRepository->findOneBy([['year',$yearValue]]);
         if(!$year) {
