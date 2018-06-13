@@ -123,7 +123,7 @@ class IndustriesValuesController extends Controller
             ];
         $validator =  Validator::make($this->request->all(),[
             'year' => 'required|date_format:"Y"',
-            'value' => 'required',
+            'value' => 'required|numeric',
         ],$messages);
 
         if ($validator->fails()) {
