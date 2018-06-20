@@ -37,8 +37,7 @@ class AdminController extends Controller
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);
-        //todo flash message
-        //session()->flash('success-alert','Вы успешно зарегистрировали нового участника');
-        return redirect()->route('regions');
+        $request->session()->flash('alert-success','Вы успешно зарегистрировали нового участника');
+        return redirect()->route('registerForm');
     }
 }

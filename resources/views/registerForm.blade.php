@@ -2,7 +2,14 @@
 @yield('login')
 
 <div class="container">
-        <div class="row">
+    <div class="flash-message">
+        @if(Session::has('alert-success'))
+
+            <p class="alert alert-success">{{ Session::get('alert-success') }} <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a></p>
+        @endif
+    </div>
+
+    <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
                     <div class="panel-heading">Зарегистрировать нового пользователя</div>

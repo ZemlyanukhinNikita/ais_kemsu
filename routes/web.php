@@ -49,7 +49,7 @@ Route::post('/reports/export','ReportsController@export')->name('export');
 
 //Кабинет администратора
 Route::post('/register/add', 'AdminController@register')->name('registerAdd');
-Route::get('register/new', function (){return view('registerForm');});
+Route::get('register/new', function (){return view('registerForm');})->name('registerForm');
 
 //Роуты регистрации и авторизации
 Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout');
