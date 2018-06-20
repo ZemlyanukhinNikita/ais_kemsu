@@ -10,6 +10,8 @@ use app\Repositories\RegionInterface;
 use App\Repositories\YearInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Maatwebsite\Excel\Concerns\FromCollection;
+use Maatwebsite\Excel\Excel;
 
 class IndicatorValuesController extends Controller
 {
@@ -41,9 +43,14 @@ class IndicatorValuesController extends Controller
      * @var RegionInterface
      */
     private $regionRepository;
+    /**
+     * @var Excel
+     */
+    private $excel;
 
     /**
      * IndicatorValuesController constructor.
+     * @param Excel $excel
      * @param Request $request
      * @param IndicatorValueInterface $indicatorValueRepository
      * @param IndicatorInterface $indicatorRepository
@@ -51,8 +58,16 @@ class IndicatorValuesController extends Controller
      * @param YearInterface $yearRepository
      * @param IndustryInterface $industryRepository
      * @param RegionInterface $regionRepository
+     * @internal param Request $request
+     * @internal param IndicatorValueInterface $indicatorValueRepository
+     * @internal param IndicatorInterface $indicatorRepository
+     * @internal param GroupInterface $groupRepository
+     * @internal param YearInterface $yearRepository
+     * @internal param IndustryInterface $industryRepository
+     * @internal param RegionInterface $regionRepository
      */
     public function __construct(
+        Excel $excel,
         Request $request,
         IndicatorValueInterface $indicatorValueRepository,
         IndicatorInterface $indicatorRepository,
@@ -69,6 +84,7 @@ class IndicatorValuesController extends Controller
         $this->yearRepository = $yearRepository;
         $this->industryRepository = $industryRepository;
         $this->regionRepository = $regionRepository;
+        $this->excel = $excel;
     }
 
     /**
@@ -179,5 +195,116 @@ class IndicatorValuesController extends Controller
             ['industry_id', null]
         ]);
         return redirect()->back();
+    }
+
+    public function export($region_id, $group_id, $indicator_id)
+    {
+        $ids = [$region_id, $group_id, $indicator_id];
+
+        //$industries = $this->industryRepository->findAllBy([['indicator_id', $indicator_id]]);
+
+        $region = $this->regionRepository->findOneBy([['id', $region_id]]);
+        $group = $this->groupRepository->findOneBy([['id', $group_id]]);
+        $indicator = $this->indicatorRepository->findOneBy([['id', $indicator_id]]);
+
+//        if ($industries->isNotEmpty())
+//        {
+//            return view('industries', [
+//                'industries' => $industries,
+//                'ids' =>$ids,
+//                'region' => $region,
+//                'group' => $group,
+//                'indicator' => $indicator
+//            ]);
+//        }
+
+        $values = $this->indicatorValueRepository->findAllBy([
+            ['indicator_id', $indicator_id],
+            ['region_id', $region_id],
+            ['industry_id',null]
+        ]);
+        $export = new InvoicesExport($this->indicatorValueRepository,$this->yearRepository,$region_id,$indicator_id);
+        return $this->excel->download($export, 'invoices.xlsx');
+
+//        return view('indicatorValues', [
+//            'values' => $values,
+//            'ids' => $ids,
+//            'region' => $region,
+//            'group' => $group,
+//            'indicator' => $indicator
+//        ]);
+    }
+}
+
+class InvoicesExport implements FromCollection
+{
+    private $invoices;
+    /**
+     * @var
+     */
+    private $ids;
+    /**
+     * @var
+     */
+    private $region_id;
+    /**
+     * @var
+     */
+    private $indicator_id;
+    /**
+     * @var YearInterface
+     */
+    private $years;
+
+    /**
+     * InvoicesExport constructor.
+     * @param IndicatorValueInterface $invoices
+     * @param YearInterface $years
+     * @param $region_id
+     * @param $indicator_id
+     * @internal param YearInterface $year
+     */
+    public function __construct(IndicatorValueInterface $invoices, YearInterface $years, $region_id, $indicator_id)
+    {
+        $this->invoices = $invoices;
+        $this->region_id = $region_id;
+        $this->indicator_id = $indicator_id;
+        $this->years = $years;
+    }
+
+    public function collection()
+    {
+        $values = $this->invoices->findAllBy([
+            ['indicator_id', $this->indicator_id],
+            ['region_id', $this->region_id],
+            ['industry_id',null]
+        ]);
+
+        $yearsId =[];
+        foreach ($values as $value)
+        {
+            $yearsId[] =  $value->year_id;
+        }
+
+        $years = [];
+        for($i=0;$i<count($yearsId); $i++)
+        {
+            $years[] = $this->years->findOneBy([['id',$yearsId[$i]]]);
+        }
+
+        $collectionValue = collect();
+        $collectionValue->push('Год');
+        foreach ($years as $year)
+        {
+            $collectionValue->push($year->year);
+        }
+
+        $collectionValue->push('Значение');
+        foreach ($values as $value)
+        {
+            $collectionValue->push($value->value);
+        }
+
+        return $collectionValue->chunk(count($collectionValue)/2.0);
     }
 }

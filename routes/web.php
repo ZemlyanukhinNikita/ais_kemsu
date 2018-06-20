@@ -16,7 +16,7 @@ Route::get('/', function () {
 });
 Route::prefix('regions')->group(function () {
     //роуты региона
-    Route::get('/', 'RegionController@show');
+    Route::get('/', 'RegionController@show')->name('regions');
     Route::match(['get', 'post'],'{region_id}/', 'RegionController@showRegion');
     Route::get('{id}/group/{group_id}','RegionController@showIndicators');
     //Роут ресурс для показателей, которые делятся на 16 отраслей (индустрий)
@@ -27,12 +27,14 @@ Route::prefix('regions')->group(function () {
     //Роут ресурс для обычных показателей характеристик региона
     Route::resource('{id}/group/{group_id}/indicator/{indicator_id}/values','IndicatorValuesController')
         ->except(['create', 'edit', 'update', 'show']);
+    Route::post('{id}/group/{group_id}/indicator/{indicator_id}/values/export','IndicatorValuesController@export')->name('values.export');
 });
 
 //роуты отчетов
 Route::get('/reports', function () {
     $groupsRepository = \App\Group::all();
     $regionsRepository = \App\Region::all();
+
     foreach ($regionsRepository as $region)
     {
         $regions[] = $region->region;
@@ -44,6 +46,10 @@ Route::get('/reports', function () {
     return view('reports',['group' => $groups,'region' => $regions]);
 });
 Route::post('/reports/export','ReportsController@export')->name('export');
+
+//Кабинет администратора
+Route::post('/register/add', 'AdminController@register')->name('registerAdd');
+Route::get('register/new', function (){return view('registerForm');});
 
 //Роуты регистрации и авторизации
 Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout');

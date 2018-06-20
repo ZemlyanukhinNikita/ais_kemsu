@@ -2,12 +2,12 @@
 @include('layouts.indexTable')
 @yield('login')
 @yield('table_style')
-<h3>{{$region->region}}</h3><br>
-<h4>{{$group->name}}</h4><br>
-<h4>{{$indicator->name}}</h4><br>
-<h4>{{$industry->name}}</h4><br>
+<h3>{{$region->region}}</h3>
+<p style="margin-left: 20px; font-size: 18px;">{{$group->name}}</p>
+<p style="margin-left: 20px; font-size: 16px;">{{$indicator->name}}</p>
+<p style="margin-left: 20px; font-size: 16px;">{{$industry->name}}</p>
+<p style="margin-left: 20px;">Таблица (год \ показатель):</p>
 
-<h3>Таблица (год \ показатель):</h3>
 @if($values->isEmpty())
     <h3>Показатели не найдены</h3>
 @endif

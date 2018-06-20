@@ -30,8 +30,8 @@ class ReportsController extends Controller
 
     public function export(Request $request, Excel $excel, InvoicesExport $export)
     {
-        $indicators = $this->indicator->findAllBy(['group_id' => $request->input('groups')+1]);
-        $indicatorsValue = $this->indicatorValue->findAllBy(['region_id' => $request->input('groups')+1]);
-       // return $excel->download($export, 'invoices.xlsx');
+        //$indicators = $this->indicator->findAllBy(['group_id' => $request->input('groups')+1]);
+        //$indicatorsValue = $this->indicatorValue->findAllBy(['region_id' => $request->input('groups')+1]);
+        return $excel->download($export, 'invoices.xlsx');
     }
 }

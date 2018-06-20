@@ -45,6 +45,10 @@
                             {{--{{ config('app.name', 'Laravel') }}--}}
                             Отчеты
                         </a>
+                        <a class="navbar-brand" href="{{ url('register/new') }}">
+                            {{--{{ config('app.name', 'Laravel') }}--}}
+                            Кабинет администратора
+                        </a>
                             @endif
                     </div>
 

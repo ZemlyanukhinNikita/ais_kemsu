@@ -2,10 +2,10 @@
 @include('layouts.indexTable')
 @yield('login')
 @yield('table_style')
-<h3>{{$region->region}}</h3><br>
-<h4>{{$group->name}}</h4><br>
-<h4>{{$indicator->name}}</h4><br>
-<h3>Таблица (год \ показатель):</h3>
+<h3>{{$region->region}}</h3>
+<p style="margin-left: 20px; font-size: 18px;">{{$group->name}}</p>
+<p style="margin-left: 20px; font-size: 16px;">{{$indicator->name}}</p>
+<p style="margin-left: 20px;">Таблица (год \ показатель):</p>
 @if($values->isEmpty())
     <h3>Показатели не найдены</h3>
 @endif
@@ -58,4 +58,10 @@
     {{ Form::text('value','',['style' => 'width:100px; '])}}
     <input type="submit" name="add" class="col-xs-offset-1 btn btn-default" value="Добавить значение"/>
     {!! Form::close() !!}
+    <br>
+    {!! Form::open(['method' => 'post','action'=>'IndicatorValuesController@export' ,'route' => ['values.export',$ids[0],$ids[1],$ids[2]]]) !!}
+    <h4 style="margin-left: 20px;">Анализ динамики показателя : {{$indicator->name}}</h4>
+    <input type="submit" name="export" class="col-xs-offset-1 btn btn-default" value="Сформировать отчет"/>
+    {!! Form::close() !!}
+    <br>
 @endif

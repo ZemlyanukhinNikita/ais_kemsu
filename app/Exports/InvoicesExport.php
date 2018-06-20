@@ -18,6 +18,7 @@ class InvoicesExport implements FromCollection
 
     public function collection()
     {
-        return $this->invoices->findAll();
+        $indicators = $this->invoices->findAllBy([['region_id','1'],['indicator_id','1'],['industry_id',null]]);
+        return $indicators;
     }
 }
